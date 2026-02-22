@@ -3,103 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Handler</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>Premium Payment Form</title>
     <style>
         body {
             background-color: black;
             color: white;
-            font-family: 'Roboto', sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(255, 20, 147, 0.5);
+            backdrop-filter: blur(10px);
         }
         h1 {
             text-align: center;
             margin-bottom: 20px;
         }
-        .container {
-            max-width: 600px;
-            margin: auto;
-            background: linear-gradient(135deg, #ff005b 0%, #ff5e00 100%);
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-        }
-        .payment-method {
+        .payment-methods {
             display: flex;
-            justify-content: space-around;
-            margin: 20px 0;
+            justify-content: space-between;
+            margin-bottom: 20px;
         }
-        .method {
-            flex: 1;
-            text-align: center;
-            padding: 20px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            transition: transform 0.3s;
+        .payment-card {
+            background: linear-gradient(145deg, #3e3e3e, #2a2a2a);
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
-        .method:hover {
-            transform: scale(1.05);
+        .payment-card:hover {
+            box-shadow: 0 0 20px hotpink;
         }
-        .method img {
-            width: 60px;
-            margin-bottom: 10px;
+        .payment-card img {
+            width: 30px;
+            vertical-align: middle;
         }
-        .input-section {
-            display: flex;
-            flex-direction: column;
-            margin: 20px 0;
+        .form-group {
+            margin-bottom: 15px;
         }
-        input[type='number'] {
+        .form-group input, .form-group select {
+            width: 100%;
             padding: 10px;
             border: none;
-            border-radius: 4px;
-            margin-bottom: 10px;
-            font-size: 18px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        .form-group input:focus {
+            outline: none;
+            box-shadow: 0 0 5px hotpink;
+        }
+        .submit-btn {
+            background: linear-gradient(45deg, hotpink, deepPink);
+            border: none;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        .submit-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 10px hotpink;
         }
         .security-badge {
+            display: block;
+            margin: 10px auto;
             text-align: center;
-            margin: 20px 0;
-        }
-        .security-badge img {
-            width: 100px;
         }
         @media (max-width: 600px) {
-            .payment-method {
-                flex-direction: column;
-            }
-            .method {
-                margin-bottom: 10px;
-                margin-left: 0;
-                margin-right: 0;
+            .container {
+                padding: 10px;
             }
         }
     </style>
 </head>
 <body>
-    <h1>Secure Payment</h1>
     <div class="container">
-        <div class="payment-method">
-            <div class="method">
-                <img src="https://example.com/visa-icon.png" alt="Visa">
-                <p>Visa</p>
+        <h1>Premium Payment Form</h1>
+        <div class="payment-methods">
+            <div class="payment-card">
+                <img src="visa-icon.png" alt="Visa"> Visa
             </div>
-            <div class="method">
-                <img src="https://example.com/mastercard-icon.png" alt="MasterCard">
-                <p>MasterCard</p>
+            <div class="payment-card">
+                <img src="mastercard-icon.png" alt="Mastercard"> Mastercard
             </div>
-            <div class="method">
-                <img src="https://example.com/paypal-icon.png" alt="PayPal">
-                <p>PayPal</p>
+            <div class="payment-card">
+                <img src="paypal-icon.png" alt="PayPal"> PayPal
             </div>
         </div>
-        <div class="input-section">
-            <label for="amount">Enter Amount:</label>
-            <input type="number" id="amount" placeholder="Amount" />
-        </div>
-        <div class="security-badge">
-            <img src="https://example.com/security-badge.png" alt="Security Badge">
-        </div>
+        <form>
+            <div class="form-group">
+                <label for="card-number">Card Number</label>
+                <input type="text" id="card-number" placeholder="1234 5678 9012 3456" required>
+            </div>
+            <div class="form-group">
+                <label for="expiry-date">Expiry Date</label>
+                <input type="text" id="expiry-date" placeholder="MM/YY" required>
+            </div>
+            <div class="form-group">
+                <label for="cvv">CVV</label>
+                <input type="text" id="cvv" placeholder="123" required>
+            </div>
+            <div class="form-group">
+                <label for="amount">Amount</label>
+                <input type="number" id="amount" placeholder="Enter Amount" required>
+            </div>
+            <button type="submit" class="submit-btn">Pay Now</button>
+        </form>
+        <span class="security-badge">🔒 Secure Payment</span>
     </div>
 </body>
 </html>
