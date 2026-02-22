@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ZSELLS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: white;
+            text-align: center;
+        }
+
+        header {
+            background: black;
+            padding: 20px;
+            border-bottom: 2px solid hotpink;
+        }
+
+        h1 {
+            color: hotpink;
+            font-size: 40px;
+            letter-spacing: 3px;
+        }
+
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .product {
+            background: #111;
+            border: 2px solid hotpink;
+            margin: 15px;
+            padding: 15px;
+            width: 250px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .product:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 20, 147, 0.5);
+        }
+
+        .product img {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        button {
+            background: hotpink;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: deeppink;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 20, 147, 0.4);
+        }
+
+        footer {
+            margin-top: 40px;
+            padding: 20px;
+            border-top: 2px solid hotpink;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background-color: #1a1a1a;
+            margin: 5% auto;
+            padding: 30px;
+            border: 2px solid hotpink;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(255, 20, 147, 0.3);
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close {
+            color: hotpink;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close:hover {
+            color: deeppink;
+        }
+
+        .modal h2 {
+            color: hotpink;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            color: #aaa;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(30, 30, 30, 0.8);
+            border: 1px solid hotpink;
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            background: rgba(30, 30, 30, 1);
+            box-shadow: 0 0 10px rgba(255, 20, 147, 0.5);
+        }
+
+        .payment-methods {
+            margin: 20px 0;
+        }
+
+        .payment-methods h3 {
+            color: #aaa;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 10px;
+            background: rgba(30, 30, 30, 0.6);
+            border: 2px solid transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .payment-option:hover {
+            background: rgba(30, 30, 30, 1);
+            border-color: hotpink;
+        }
+
+        .payment-option input[type="radio"] {
+            accent-color: hotpink;
+            margin-right: 12px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .payment-option:has(input:checked) {
+            background: rgba(255, 20, 147, 0.1);
+            border-color: hotpink;
+        }
+
+        .security-info {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: rgba(255, 20, 147, 0.05);
+            border-radius: 8px;
+            margin: 20px 0;
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        .security-icon {
+            margin-right: 10px;
+            color: hotpink;
+            font-size: 16px;
+        }
+
+        .modal-button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, hotpink 0%, #ff1493 100%);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 20px;
+        }
+
+        .modal-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 20, 147, 0.4);
+        }
+
+        .cart-count {
+            display: inline-block;
+            background: hotpink;
+            color: black;
+            padding: 5px 10px;
+            border-radius: 20px;
+            margin-left: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>ZSELLS</h1>
+    <p>Your Style. Your Brand. <span class="cart-count">Cart: <span id="cart-count">0</span></span></p>
+</header>
+
+<section class="products">
+
+    <div class="product">
+        <img src="https://via.placeholder.com/250" alt="Product 1">
+        <h3>Premium Hoodie</h3>
+        <p>$45.00</p>
+        <button onclick="openPaymentModal(45)">Buy Now</button>
+    </div>
+
+    <div class="product">
+        <img src="https://via.placeholder.com/250" alt="Product 2">
+        <h3>Classic T-Shirt</h3>
+        <p>$25.00</p>
+        <button onclick="openPaymentModal(25)">Buy Now</button>
+    </div>
+
+    <div class="product">
+        <img src="https://via.placeholder.com/250" alt="Product 3">
+        <h3>Snapback Cap</h3>
+        <p>$30.00</p>
+        <button onclick="openPaymentModal(30)">Buy Now</button>
+    </div>
+
+</section>
+
+<div id="paymentModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closePaymentModal()">&times;</span>
+        <h2>Secure Checkout</h2>
+
+        <div class="security-info">
+            <span class="security-icon">🔒</span>
+            <span>Your payment information is encrypted and secure</span>
+        </div>
+
+        <form id="paymentForm">
+            <div class="form-group">
+                <label for="amount">Order Total:</label>
+                <input type="text" id="amount" name="amount" readonly style="background: rgba(255, 20, 147, 0.1); cursor: not-allowed;">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="your@email.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="John Doe" required>
+            </div>
+
+            <div class="payment-methods">
+                <h3>Payment Method</h3>
+                
+                <label class="payment-option">
+                    <input type="radio" name="payment-method" value="applepay" required>
+                    <span>🍎 Apple Pay</span>
+                </label>
+
+                <label class="payment-option">
+                    <input type="radio" name="payment-method" value="googlepay">
+                    <span>🔵 Google Pay</span>
+                </label>
+
+                <label class="payment-option">
+                    <input type="radio" name="payment-method" value="cashapp">
+                    <span>💵 Cash App</span>
+                </label>
+
+                <label class="payment-option">
+                    <input type="radio" name="payment-method" value="paypal">
+                    <span>🅿️ PayPal</span>
+                </label>
+
+                <label class="payment-option">
+                    <input type="radio" name="payment-method" value="card">
+                    <span>💳 Credit/Debit Card</span>
+                </label>
+            </div>
+
+            <button type="submit" class="modal-button">Complete Payment</button>
+        </form>
+    </div>
+</div>
+
+<footer>
+    <p>© 2026 ZSELLS. All Rights Reserved.</p>
+    <p>Secure. Fast. Reliable.</p>
+</footer>
+
+<script>
+let cartCount = 0;
+
+function openPaymentModal(price) {
+    document.getElementById('paymentModal').style.display = 'block';
+    document.getElementById('amount').value = '$' + price.toFixed(2);
+    document.getElementById('paymentForm').dataset.amount = price;
+}
+
+function closePaymentModal() {
+    document.getElementById('paymentModal').style.display = 'none';
+}
+
+document.getElementById('paymentForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const paymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
+    const amount = this.dataset.amount;
+    const email = document.getElementById('email').value;
+    const name = document.getElementById('name').value;
+
+    alert(`Processing ${paymentMethod.toUpperCase()} payment of $${amount} for ${name}. Thank you for your purchase!`);
+    
+    cartCount++;
+    document.getElementById('cart-count').textContent = cartCount;
+    
+    closePaymentModal();
+    document.getElementById('paymentForm').reset();
+});
+
+window.onclick = function(event) {
+    const modal = document.getElementById('paymentModal');
+    if (event.target == modal) {
+        modal.style.display = 'none';
+    }
+}
+</script>
+
+</body>
+</html>
